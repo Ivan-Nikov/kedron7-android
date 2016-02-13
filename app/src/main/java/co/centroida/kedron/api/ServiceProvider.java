@@ -68,18 +68,23 @@ public class ServiceProvider {
 
 
     public static void requestToken(String username, String password){
-        Call<Token> call = kedronService.getToken("password", "icaka@icaka.bg", "123456q");
-        try {
-            token = "Bearer " + call.execute().body().getToken();
-            Log.i("TOKEN", token);
-            Log.i("TOKEN", "Token received");
-            isTokenPresent = true;
-        } catch (IOException e) {
-            Log.e("TOKEN", "Failed to retrieve the token");
-        }
+
+        //TODO: Do not try at home
+        token = "Bearer 0Mgm5aPhJFYs5xJUVU0dlp0BpfZgAs4ThDdPk63ScxUmO7j-zqTG0pltvM5GYlovl6WO3Te_cgT1FpuiDrgEbzG9xhvLr01heZBCLFLGUOI2Cc_tN5LHqHcf9Ctk4d_jRfOedK5Uv7YuGHXUj_Q2nhgneKvTLAkrMpjxILAV06mH74hiGlx6Mo3y1KMOJPevHRl5IKdtPEWLuqB8yh3RC0NeId-CesiC6SsEY6IKiZ6g9hnkT7smV1CVWsupJV2ssvqMqJDoGqkD4YWhDOjOJIvOoupPpudpO1sncuk-s8bHpyOrQ7b5rwP4sv0r1cTaOWYEY0ZGE5-n9FkpCZyUChmumwO4vkvWwly_brJRs_PQs2LXOQsWVBIVTZUUx24IQeyWqt2qP9qxM6j40wcnxqG_sJ1jUbwuX7g9BJ4xf6oDhPpR1A9TaSwUYdJRhWa5i30wnzACHegTSLv-Vs-usXPQIy2PN9JQQ_JUwdEHEgs";
+        bindToken();
+//        Call<Token> call = kedronService.getToken("password", "icaka@icaka.bg", "123456q");
+//        try {
+//            token = "Bearer " + call.execute().body().getToken();
+//            Log.i("TOKEN", token);
+//            Log.i("TOKEN", "Token received");
+//            bindToken();
+//            isTokenPresent = true;
+//        } catch (IOException e) {
+//            Log.e("TOKEN", "Failed to retrieve the token");
+//        }
     }
 
-    private static void bindToken() {
+    public static void bindToken() {
         if (token != null) {
             OkHttpClient.Builder httpClient = new OkHttpClient.Builder();
             httpClient.addInterceptor(new Interceptor() {
