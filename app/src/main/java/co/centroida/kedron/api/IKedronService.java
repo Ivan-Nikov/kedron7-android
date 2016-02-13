@@ -8,7 +8,13 @@ import retrofit2.http.Headers;
 import retrofit2.http.POST;
 
 public interface IKedronService {
-
+    /**
+     * Sends an encoded request for the token
+     * @param grantType Grant type for the token
+     * @param email Username
+     * @param password Password of the user
+     * @return Token call
+     */
     @Headers({"Accept: application/json"})
     @FormUrlEncoded
     @POST("token")
