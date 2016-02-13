@@ -12,6 +12,20 @@ public class Building {
     @SerializedName("FloorsCount")
     public int floors;
 
+    public Building(Building building){
+        this.id = building.getId();
+        this.address = building.getAddress();
+        this.location = building.getLocation();
+        this.floors = building.getFloors();
+    }
+
+    public Building( ) {
+        this.id = 0;
+        this.address = "";
+        this.location = "";
+        this.floors = 0;
+    }
+
     public String getLocation() {
         return location;
     }
@@ -26,20 +40,6 @@ public class Building {
 
     public int getFloors() {
         return floors;
-    }
-
-    public Building(Building building){
-        this.id = building.getId();
-        this.address = building.getAddress();
-        this.location = building.getLocation();
-        this.floors = building.getFloors();
-    }
-
-    public Building( ) {
-        this.id = 0;
-        this.address = "";
-        this.location = "";
-        this.floors = 0;
     }
 
     public void from(Building building){
