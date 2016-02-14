@@ -19,6 +19,14 @@ public class Building {
         this.floors = building.getFloors();
     }
 
+    //TODO: Solely for the building creation
+    public Building(String address, String location, int floors) {
+        this.id = 0;
+        this.address = address;
+        this.location = location;
+        this.floors = floors;
+    }
+
     public Building( ) {
         this.id = 0;
         this.address = "";

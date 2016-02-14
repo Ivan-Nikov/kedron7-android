@@ -3,7 +3,11 @@ package co.centroida.kedron.api;
 import co.centroida.kedron.api.models.Building;
 import co.centroida.kedron.api.models.BuildingResponse;
 import retrofit2.Call;
+import retrofit2.http.Body;
+import retrofit2.http.DELETE;
 import retrofit2.http.GET;
+import retrofit2.http.POST;
+import retrofit2.http.PUT;
 import retrofit2.http.Path;
 import retrofit2.http.Query;
 
@@ -37,4 +41,14 @@ public interface IBuildingService {
     Call<BuildingResponse> getBuildingsTop(@Query("top") int top, @Query("skip") int skip,
                                            @Query("orderby") String orderby,
                                            @Query("filter")  String filter);
+
+    @POST("api/Buildings")
+    Call<Building> createBuilding(@Body Building building);
+
+    @PUT("api/Buildings/{id}")
+    Call<Building> upadteBuilding(@Path("id") int id);
+
+    @DELETE("api/Buildings/{id}")
+    Call<String> deleteBuilding(@Path("id") int id);
+
 }
