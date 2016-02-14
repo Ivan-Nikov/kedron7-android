@@ -26,7 +26,6 @@ public class BuildingsAdapter extends ArrayAdapter<Building> {
     class BuildingViewHolder {
         TextView buildingLocation;
         TextView buildingAddress;
-        TextView floors;
     }
 
     @Override
@@ -37,7 +36,6 @@ public class BuildingsAdapter extends ArrayAdapter<Building> {
             convertView = LayoutInflater.from(getContext()).inflate(R.layout.building_viewholder, parent, false);
             holder.buildingAddress = (TextView) convertView.findViewById(R.id.building_address);
             holder.buildingLocation = (TextView) convertView.findViewById(R.id.building_location);
-            holder.floors = (TextView) convertView.findViewById(R.id.building_floorscount);
 
             convertView.setTag(holder);
         }else{
@@ -46,7 +44,6 @@ public class BuildingsAdapter extends ArrayAdapter<Building> {
 
         holder.buildingLocation.setText(getItem(position).getLocation());
         holder.buildingAddress.setText(getItem(position).getAddress());
-        holder.floors.setText(String.valueOf(getItem(position).getFloors()));
 
         return convertView;
     }
