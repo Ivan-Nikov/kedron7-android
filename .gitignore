@@ -41,3 +41,5 @@ proguard/
 # Android Studio captures folder
 captures/
 >>>>>>> 4931691f0e3136be38a33e20d04f5e46e1b26e9f
+
+.idea/misc.xml
