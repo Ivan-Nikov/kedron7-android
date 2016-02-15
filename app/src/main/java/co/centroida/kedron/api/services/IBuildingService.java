@@ -1,4 +1,4 @@
-package co.centroida.kedron.api;
+package co.centroida.kedron.api.services;
 
 import co.centroida.kedron.api.models.Building;
 import co.centroida.kedron.api.models.BuildingResponse;
@@ -11,6 +11,10 @@ import retrofit2.http.PUT;
 import retrofit2.http.Path;
 import retrofit2.http.Query;
 
+/**
+ * An interface to create a retrofit service
+ * Implement Building CRUD
+ */
 public interface IBuildingService {
 
     /**
@@ -42,12 +46,28 @@ public interface IBuildingService {
                                            @Query("orderby") String orderby,
                                            @Query("filter")  String filter);
 
+    /**
+     * Creates a new building and uploads
+     * @param building A building instance to upload
+     * @return A new building with an ID
+     */
     @POST("api/Buildings")
     Call<Building> createBuilding(@Body Building building);
 
+    /**
+     * Updates the building through a given ID
+     * @param building A building instance to upload
+     * @param id An ID of the building to update
+     * @return An updated building with an ID
+     */
     @PUT("api/Buildings/{id}")
-    Call<Building> upadteBuilding(@Path("id") int id);
+    Call<Building> upadteBuilding(@Body Building building, @Path("id") int id);
 
+    /**
+     * Deletes the buiding by a given ID
+     * @param id An ID of the building to delete
+     * @return A response string with a status
+     */
     @DELETE("api/Buildings/{id}")
     Call<String> deleteBuilding(@Path("id") int id);
 

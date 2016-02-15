@@ -13,7 +13,7 @@ import co.centroida.kedron.R;
 import co.centroida.kedron.api.models.Building;
 
 /**
- * Created by rimmustafin on 2/13/16.
+ * Created by clstl on 2/13/16.
  */
 public class BuildingsAdapter extends ArrayAdapter<Building> {
     private List<Building> buildingList;

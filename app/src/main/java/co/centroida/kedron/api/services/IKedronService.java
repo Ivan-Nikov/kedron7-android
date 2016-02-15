@@ -1,4 +1,4 @@
-package co.centroida.kedron.api;
+package co.centroida.kedron.api.services;
 
 import co.centroida.kedron.api.models.Token;
 import retrofit2.Call;

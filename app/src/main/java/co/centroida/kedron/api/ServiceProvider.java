@@ -5,11 +5,11 @@ import android.util.Log;
 import java.io.IOException;
 
 import co.centroida.kedron.api.models.Building;
-import co.centroida.kedron.api.models.Token;
+import co.centroida.kedron.api.services.IBuildingService;
+import co.centroida.kedron.api.services.IKedronService;
 import okhttp3.Interceptor;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
-import retrofit2.Call;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
@@ -32,23 +32,12 @@ public class ServiceProvider {
         return isTokenPresent;
     }
 
-    public static <S> S createService(Class<S> serviceClass) throws Exception{
-        if(isTokenPresent)
-            return retrofit.create(serviceClass);
-        else
-            throw new Exception("Token is missing");
-    }
-
     public static IBuildingService getBuildingService(){
-        if(buildingService == null)
-            buildingService = retrofit.create(IBuildingService.class);
-        return  buildingService;
+        return retrofit.create(IBuildingService.class);
     }
 
     public static IKedronService getKedronService(){
-        if(kedronService == null)
-            kedronService = retrofit.create(IKedronService.class);
-        return kedronService;
+        return retrofit.create(IKedronService.class);
     }
 
     public static void init(){
@@ -69,7 +58,8 @@ public class ServiceProvider {
 
     public static void requestToken(String username, String password){
 
-        //TODO: Do not try at home
+        //TODO: Do not change the token for now, as it is easier to have it here
+        //TODO: Implement token storage option
         token = "Bearer 0Mgm5aPhJFYs5xJUVU0dlp0BpfZgAs4ThDdPk63ScxUmO7j-zqTG0pltvM5GYlovl6WO3Te_cgT1FpuiDrgEbzG9xhvLr01heZBCLFLGUOI2Cc_tN5LHqHcf9Ctk4d_jRfOedK5Uv7YuGHXUj_Q2nhgneKvTLAkrMpjxILAV06mH74hiGlx6Mo3y1KMOJPevHRl5IKdtPEWLuqB8yh3RC0NeId-CesiC6SsEY6IKiZ6g9hnkT7smV1CVWsupJV2ssvqMqJDoGqkD4YWhDOjOJIvOoupPpudpO1sncuk-s8bHpyOrQ7b5rwP4sv0r1cTaOWYEY0ZGE5-n9FkpCZyUChmumwO4vkvWwly_brJRs_PQs2LXOQsWVBIVTZUUx24IQeyWqt2qP9qxM6j40wcnxqG_sJ1jUbwuX7g9BJ4xf6oDhPpR1A9TaSwUYdJRhWa5i30wnzACHegTSLv-Vs-usXPQIy2PN9JQQ_JUwdEHEgs";
         bindToken();
 //        Call<Token> call = kedronService.getToken("password", "icaka@icaka.bg", "123456q");

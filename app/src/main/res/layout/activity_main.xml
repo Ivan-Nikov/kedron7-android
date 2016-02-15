@@ -7,19 +7,5 @@
     android:orientation="vertical"
     tools:context=".activities.MainActivity">
 
-    <EditText android:id="@+id/search_text"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="Search"
-        android:layout_margin="2dp"
-        android:imeOptions="actionSearch"
-        android:singleLine="true"/>
-
-    <ListView android:id="@+id/buildings_view"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content">
-
-    </ListView>
-
 
 </LinearLayout>
