@@ -21,4 +21,5 @@ public class Token {
     public String getToken() {
         return access_token;
     }
+    public void setToken(String access_token) { this.access_token = access_token; };
 }

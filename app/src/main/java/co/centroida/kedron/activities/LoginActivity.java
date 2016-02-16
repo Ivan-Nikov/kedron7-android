@@ -46,6 +46,14 @@ public class LoginActivity extends AppCompatActivity {
         // Set up the login form.
         mEmailView = (AutoCompleteTextView) findViewById(R.id.email);
 
+        //Check whether the token is present
+        ServiceProvider.init();
+        if(ServiceProvider.checkSavedToken(this)){
+            Intent toMain = new Intent(this, MainActivity.class);
+            startActivity(toMain);
+            finish();
+        }
+
         mPasswordView = (EditText) findViewById(R.id.password);
         mPasswordView.setOnEditorActionListener(new TextView.OnEditorActionListener() {
             @Override
@@ -198,7 +206,7 @@ public class LoginActivity extends AppCompatActivity {
         @Override
         protected Boolean doInBackground(Void... params) {
             ServiceProvider.init();
-            ServiceProvider.requestToken(mEmail, mPassword);
+            ServiceProvider.requestToken(mEmail, mPassword, context);
 
             // TODO: register the new account here.
             Log.i("LOGIN", String.valueOf(ServiceProvider.hasToken()));

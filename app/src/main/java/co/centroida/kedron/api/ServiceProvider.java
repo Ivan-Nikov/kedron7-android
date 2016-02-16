@@ -1,46 +1,73 @@
 package co.centroida.kedron.api;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.util.Log;
 
 import java.io.IOException;
 
-import co.centroida.kedron.api.models.Building;
+import co.centroida.kedron.api.models.Token;
 import co.centroida.kedron.api.services.IBuildingService;
+import co.centroida.kedron.api.services.IDebtService;
+import co.centroida.kedron.api.services.IHouseholdService;
 import co.centroida.kedron.api.services.IKedronService;
 import okhttp3.Interceptor;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
+import retrofit2.Call;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 public class ServiceProvider {
 
     private static final String apiAddress = "http://kedronka.azurewebsites.net";
-    private static String token = "";
-    //TODO: save the token on the device till the expiration date
+    private static final String token_storage = "TOKEN_STORAGE";
+
     private static boolean isTokenPresent = false;
+    private static Token auth_token;
+    private static String header_token;
 
     private static Retrofit retrofit;
     private static OkHttpClient client;
 
     private static IKedronService kedronService;
     private static IBuildingService buildingService;
+    private static IHouseholdService householdService;
+    private static IDebtService debtService;
 
-    private static Building building;
-
-    public static boolean hasToken(){
+    public static boolean hasToken() {
         return isTokenPresent;
     }
 
-    public static IBuildingService getBuildingService(){
-        return retrofit.create(IBuildingService.class);
+    public static IBuildingService getBuildingService() {
+        if (buildingService == null) {
+            buildingService = retrofit.create(IBuildingService.class);
+        }
+        return buildingService;
     }
 
-    public static IKedronService getKedronService(){
-        return retrofit.create(IKedronService.class);
+    public static IKedronService getKedronService() {
+        if (kedronService == null) {
+            kedronService = retrofit.create(IKedronService.class);
+        }
+        return kedronService;
     }
 
-    public static void init(){
+    public static IHouseholdService getHouseholdService() {
+        if (householdService == null) {
+            householdService = retrofit.create(IHouseholdService.class);
+        }
+        return householdService;
+    }
+
+    public static IDebtService getDebtService() {
+        if(debtService == null){
+            debtService = retrofit.create(IDebtService.class);
+        }
+        return debtService;
+    }
+
+    public static void init() {
         //Create an HTTP client
         client = new OkHttpClient();
 
@@ -55,27 +82,50 @@ public class ServiceProvider {
         kedronService = retrofit.create(IKedronService.class);
     }
 
+    public static boolean checkSavedToken(Context context) {
+        //Check whether the token exists
+        SharedPreferences preferences = context.getSharedPreferences(token_storage, 0);
+        String storage_token = preferences.getString("token", "notoken");
 
-    public static void requestToken(String username, String password){
-
-        //TODO: Do not change the token for now, as it is easier to have it here
-        //TODO: Implement token storage option
-        token = "Bearer 0Mgm5aPhJFYs5xJUVU0dlp0BpfZgAs4ThDdPk63ScxUmO7j-zqTG0pltvM5GYlovl6WO3Te_cgT1FpuiDrgEbzG9xhvLr01heZBCLFLGUOI2Cc_tN5LHqHcf9Ctk4d_jRfOedK5Uv7YuGHXUj_Q2nhgneKvTLAkrMpjxILAV06mH74hiGlx6Mo3y1KMOJPevHRl5IKdtPEWLuqB8yh3RC0NeId-CesiC6SsEY6IKiZ6g9hnkT7smV1CVWsupJV2ssvqMqJDoGqkD4YWhDOjOJIvOoupPpudpO1sncuk-s8bHpyOrQ7b5rwP4sv0r1cTaOWYEY0ZGE5-n9FkpCZyUChmumwO4vkvWwly_brJRs_PQs2LXOQsWVBIVTZUUx24IQeyWqt2qP9qxM6j40wcnxqG_sJ1jUbwuX7g9BJ4xf6oDhPpR1A9TaSwUYdJRhWa5i30wnzACHegTSLv-Vs-usXPQIy2PN9JQQ_JUwdEHEgs";
-        bindToken();
-//        Call<Token> call = kedronService.getToken("password", "icaka@icaka.bg", "123456q");
-//        try {
-//            token = "Bearer " + call.execute().body().getToken();
-//            Log.i("TOKEN", token);
-//            Log.i("TOKEN", "Token received");
-//            bindToken();
-//            isTokenPresent = true;
-//        } catch (IOException e) {
-//            Log.e("TOKEN", "Failed to retrieve the token");
-//        }
+        if (!storage_token.equals("notoken")) {
+            Log.d("Service", "Using stored token");
+            header_token = "Bearer " + storage_token;
+            isTokenPresent = true;
+            bindToken();
+            return true;
+        }
+        return false;
     }
 
+    public static void requestToken(String username, String password, Context context) {
+
+        //Save the retrieved token
+        SharedPreferences preferences = context.getSharedPreferences(token_storage, 0);
+        SharedPreferences.Editor editor = preferences.edit();
+        Call<Token> call = kedronService.getToken("password", username, password);
+
+        try {
+            Log.d("Service", "Using a new token");
+            auth_token = call.execute().body();
+
+            Log.d("Service", "Token received");
+
+            isTokenPresent = true;
+        } catch (IOException e) {
+            Log.e("TOKEN", "Failed to retrieve the token", e);
+        }
+
+        header_token = "Bearer " + auth_token;
+
+        editor.putString("token", auth_token.getToken());
+        editor.apply();
+
+        bindToken();
+    }
+
+
     public static void bindToken() {
-        if (token != null) {
+        if (header_token != null) {
             OkHttpClient.Builder httpClient = new OkHttpClient.Builder();
             httpClient.addInterceptor(new Interceptor() {
                 @Override
@@ -84,7 +134,7 @@ public class ServiceProvider {
 
                     // Request customization: add request headers
                     Request.Builder requestBuilder = original.newBuilder()
-                            .header("Authorization", token)
+                            .header("Authorization", header_token)
                             .method(original.method(), original.body());
 
                     Request request = requestBuilder.build();
@@ -102,7 +152,7 @@ public class ServiceProvider {
 
             //Form an API to receive a token
             kedronService = retrofit.create(IKedronService.class);
-            Log.i("TOKEN", "The token is bound to the client");
+            Log.i("Service", "The token is bound to the client");
             isTokenPresent = true;
         }
     }
