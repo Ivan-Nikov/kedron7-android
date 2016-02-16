@@ -1,4 +1,4 @@
-<<<<<<< HEAD
+.idea
 *.iml
 .gradle
 /local.properties
@@ -7,7 +7,6 @@
 .DS_Store
 /build
 /captures
-=======
 # Built application files
 *.apk
 *.ap_
