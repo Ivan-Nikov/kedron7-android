@@ -15,9 +15,9 @@ public class Debt {
     @SerializedName("IsPaid")
     public boolean IsPaid;
     @SerializedName("DateMade")
-    public Date DateMade;
+    public String DateMade;
     @SerializedName("DatePaid")
-    public Date DatePaid;
+    public String DatePaid;
     @SerializedName("ExpenseTypeName")
     public String ExpenseTypeName;
     @SerializedName("HouseholdName")
@@ -65,22 +65,6 @@ public class Debt {
 
     public void setIsPaid(boolean isPaid) {
         IsPaid = isPaid;
-    }
-
-    public Date getDateMade() {
-        return DateMade;
-    }
-
-    public void setDateMade(Date dateMade) {
-        DateMade = dateMade;
-    }
-
-    public Date getDatePaid() {
-        return DatePaid;
-    }
-
-    public void setDatePaid(Date datePaid) {
-        DatePaid = datePaid;
     }
 
     public String getExpenseTypeName() {
