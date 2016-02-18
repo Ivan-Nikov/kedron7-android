@@ -16,7 +16,7 @@ import retrofit2.http.Query;
 
 public interface IDebtService {
 
-    @PUT("api/debts/{id}pay")
+    @PUT("api/debts/{id}/pay")
     Call<String> payDebt(@Path("id") int id);
 
     @GET("api/Debts/{id}")
