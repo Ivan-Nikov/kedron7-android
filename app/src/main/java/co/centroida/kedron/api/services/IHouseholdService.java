@@ -18,12 +18,13 @@ public interface IHouseholdService {
     Call<Household> getHouseholds(@Path("id") Integer id);
 
 
-    @GET("api/households")
+    @GET("api/households/")
     Call<HouseholdResponse> getHouseholds();
 
 
-    @GET("api/households")
-    Call<HouseholdResponse> getHouseholdsTop(@Query("top") int top, @Query("skip") int skip,
+
+    @GET("api/buildings/{id}/households")
+    Call<HouseholdResponse> getHouseholdsTop(@Path("id") int id, @Query("top") int top, @Query("skip") int skip,
                                            @Query("orderby") String orderby,
                                            @Query("filter") String filter);
 
