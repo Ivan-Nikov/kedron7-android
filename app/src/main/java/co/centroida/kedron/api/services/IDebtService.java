@@ -2,6 +2,7 @@ package co.centroida.kedron.api.services;
 
 import co.centroida.kedron.api.models.Debt;
 import co.centroida.kedron.api.models.DebtResponse;
+import co.centroida.kedron.api.models.PaymentResponse;
 import retrofit2.Call;
 import retrofit2.http.DELETE;
 import retrofit2.http.Field;
@@ -31,4 +32,7 @@ public interface IDebtService {
     //TODO: Complete the call
     @GET("api/households/{id}/debts")
     Call<DebtResponse> getHouseholdDebts(@Path("id") int id, @Query("top") int top);
+
+    @GET("api/households/{id}/payments")
+    Call<PaymentResponse> getHouseholdPayments(@Path("id") int id, @Query("top") int top);
 }

@@ -1,7 +1,9 @@
 package co.centroida.kedron.fragments;
 
 import android.app.AlertDialog;
-import android.app.ListFragment;
+import android.support.design.widget.AppBarLayout;
+import android.support.design.widget.CoordinatorLayout;
+import android.support.v4.app.ListFragment;
 import android.content.DialogInterface;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
@@ -35,6 +37,7 @@ public class DebtsListFragment extends ListFragment{
     @Override
     public void onCreate(Bundle savedInstance){
         super.onCreate(savedInstance);
+
 
         Log.d("Debts", "Debt is creating...");
 
