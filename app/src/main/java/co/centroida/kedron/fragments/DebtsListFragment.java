@@ -61,7 +61,7 @@ public class DebtsListFragment extends ListFragment{
             Log.d("Debt", "Token is in place...");
             debtService = ServiceProvider.getDebtService();
 
-            Call<DebtResponse> call = debtService.getHouseholdDebts(1, 30);
+            Call<DebtResponse> call = debtService.getHouseholdDebts(2, 30);
 
             Log.d("Debt", "A call is formed");
 
@@ -115,7 +115,7 @@ public class DebtsListFragment extends ListFragment{
                     public void onResponse(Call<String> call, Response<String> response) {
                         Snackbar.make(getView(), item.getExpenseTypeName() + " has been deleted.",
                                 Snackbar.LENGTH_LONG).show();
-                        updateList();
+
                     }
 
                     @Override
@@ -123,6 +123,7 @@ public class DebtsListFragment extends ListFragment{
 
                     }
                 });
+                updateList();
             }
         });
         builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {

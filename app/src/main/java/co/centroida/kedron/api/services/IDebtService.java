@@ -29,6 +29,6 @@ public interface IDebtService {
     Call<Debt> updateDet(@Path("id") int id);
 
     //TODO: Complete the call
-    @GET("api/households/{id}/payments")
+    @GET("api/households/{id}/debts")
     Call<DebtResponse> getHouseholdDebts(@Path("id") int id, @Query("top") int top);
 }
