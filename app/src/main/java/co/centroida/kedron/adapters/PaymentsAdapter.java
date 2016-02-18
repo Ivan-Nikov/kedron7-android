@@ -10,7 +10,6 @@ import android.widget.TextView;
 import java.util.List;
 
 import co.centroida.kedron.R;
-import co.centroida.kedron.api.models.Debt;
 import co.centroida.kedron.api.models.Payment;
 
 /**

@@ -13,5 +13,7 @@
     <string name="error_field_required">This field is required</string>
     <string name="title_activity_front">FrontActivity</string>
     <string name="action_settings">Settings</string>
-    <string name="title_activity_debts">Debts</string>
+    <string name="debts_fragment_name">Debts</string>
+    <string name="deposits_fragment_name">Deposits</string>
+    <string name="payments_fragment_name">Payments</string>
 </resources>

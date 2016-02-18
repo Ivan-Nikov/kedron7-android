@@ -26,7 +26,6 @@ public class DebtsAdapter extends ArrayAdapter<Debt>{
     private class DebtViewHolder{
         TextView value;
         TextView expenseName;
-        TextView isPaid;
     }
 
     public DebtsAdapter(Context context, int res){
@@ -42,7 +41,6 @@ public class DebtsAdapter extends ArrayAdapter<Debt>{
                     .inflate(R.layout.debt_viewholder, parent, false);
             holder.expenseName = (TextView) convertView.findViewById(R.id.debt_name);
             holder.value = (TextView) convertView.findViewById(R.id.debt_value);
-            holder.isPaid= (TextView) convertView.findViewById(R.id.debt_paid);
 
             convertView.setTag(holder);;
         }else{
@@ -51,7 +49,6 @@ public class DebtsAdapter extends ArrayAdapter<Debt>{
 
         holder.expenseName.setText(getItem(position).getExpenseTypeName());
         holder.value.setText(String.valueOf(getItem(position).getValue()));
-        holder.isPaid.setText(getItem(position).isPaid() ? "PAID" : "NOTPAID");
 
         return convertView;
     }

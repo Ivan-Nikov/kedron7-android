@@ -1,7 +1,10 @@
 package co.centroida.kedron.api.services;
 
+import java.util.List;
+
 import co.centroida.kedron.api.models.Debt;
 import co.centroida.kedron.api.models.DebtResponse;
+import co.centroida.kedron.api.models.Deposit;
 import co.centroida.kedron.api.models.PaymentResponse;
 import retrofit2.Call;
 import retrofit2.http.DELETE;
@@ -15,7 +18,7 @@ import retrofit2.http.Query;
  * Created by rimmustafin on 2/16/16.
  */
 
-public interface IDebtService {
+public interface ICashService {
 
     @PUT("api/debts/{id}/pay")
     Call<String> payDebt(@Path("id") int id);
@@ -35,4 +38,7 @@ public interface IDebtService {
 
     @GET("api/households/{id}/payments")
     Call<PaymentResponse> getHouseholdPayments(@Path("id") int id, @Query("top") int top);
+
+    @GET("api/households/{id}/deposits")
+    Call<List<Deposit>> getHousegoldDeposits(@Path("id") int id);
 }

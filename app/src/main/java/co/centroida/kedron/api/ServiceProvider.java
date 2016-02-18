@@ -4,11 +4,14 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.util.Log;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+
 import java.io.IOException;
 
 import co.centroida.kedron.api.models.Token;
 import co.centroida.kedron.api.services.IBuildingService;
-import co.centroida.kedron.api.services.IDebtService;
+import co.centroida.kedron.api.services.ICashService;
 import co.centroida.kedron.api.services.IHouseholdService;
 import co.centroida.kedron.api.services.IKedronService;
 import okhttp3.Interceptor;
@@ -33,7 +36,7 @@ public class ServiceProvider {
     private static IKedronService kedronService;
     private static IBuildingService buildingService;
     private static IHouseholdService householdService;
-    private static IDebtService debtService;
+    private static ICashService cashService;
 
     public static boolean hasToken() {
         return isTokenPresent;
@@ -60,11 +63,11 @@ public class ServiceProvider {
         return householdService;
     }
 
-    public static IDebtService getDebtService() {
-        if(debtService == null){
-            debtService = retrofit.create(IDebtService.class);
+    public static ICashService getCashService() {
+        if(cashService == null){
+            cashService = retrofit.create(ICashService.class);
         }
-        return debtService;
+        return cashService;
     }
 
     public static void init() {
@@ -144,10 +147,14 @@ public class ServiceProvider {
 
             client = httpClient.build();
 
+            Gson gson = new GsonBuilder()
+                    .setDateFormat("yyyy-MM-dd'T'HH:mm:ss")
+                    .create();
+
             retrofit = new Retrofit.Builder()
                     .client(client)
                     .baseUrl(apiAddress)
-                    .addConverterFactory(GsonConverterFactory.create())
+                    .addConverterFactory(GsonConverterFactory.create(gson))
                     .build();
 
             //Form an API to receive a token

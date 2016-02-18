@@ -4,36 +4,28 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="horizontal"
-    android:weightSum="3"
+    android:weightSum="2"
     >
 
-        <TextView
-            android:id="@+id/debt_name"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="5dp"
-            android:padding="5dp"
-            android:layout_weight="1"
-            android:textColor="@color/black"
-            />
-        <TextView
-            android:id="@+id/debt_value"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="5dp"
-            android:padding="5dp"
-            android:layout_weight="1"
-            android:textColor="@color/black"
-            />
-        <TextView
-            android:id="@+id/debt_paid"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="5dp"
-            android:padding="5dp"
-            android:layout_weight="1"
-            android:textColor="@color/black"
-            />
+    <TextView
+        android:id="@+id/debt_name"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="5dp"
+        android:layout_weight="1"
+        android:padding="5dp"
+        android:textColor="@color/black"
+        />
 
+    <TextView
+        android:id="@+id/debt_value"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="5dp"
+        android:layout_gravity="end"
+        android:layout_weight="1"
+        android:padding="5dp"
+        android:textColor="@color/black"
+        />
 
 </LinearLayout>

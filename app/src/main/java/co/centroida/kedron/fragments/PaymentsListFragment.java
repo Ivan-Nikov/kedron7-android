@@ -1,9 +1,6 @@
 package co.centroida.kedron.fragments;
 
-import android.app.AlertDialog;
-import android.content.DialogInterface;
 import android.os.Bundle;
-import android.support.design.widget.Snackbar;
 import android.support.v4.app.ListFragment;
 import android.util.Log;
 import android.view.View;
@@ -11,13 +8,11 @@ import android.widget.ListView;
 
 import java.io.IOException;
 
-import co.centroida.kedron.adapters.DebtsAdapter;
+import co.centroida.kedron.R;
 import co.centroida.kedron.adapters.PaymentsAdapter;
 import co.centroida.kedron.api.ServiceProvider;
-import co.centroida.kedron.api.models.Debt;
-import co.centroida.kedron.api.models.DebtResponse;
 import co.centroida.kedron.api.models.PaymentResponse;
-import co.centroida.kedron.api.services.IDebtService;
+import co.centroida.kedron.api.services.ICashService;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -28,12 +23,11 @@ import retrofit2.Response;
 public class PaymentsListFragment extends ListFragment{
 
     private PaymentsAdapter paymentAdapter;
-    private IDebtService debtService;
+    private ICashService debtService;
 
     @Override
     public void onCreate(Bundle savedInstance){
         super.onCreate(savedInstance);
-
 
         Log.d("Payment", "Payment is creating...");
 
@@ -58,7 +52,7 @@ public class PaymentsListFragment extends ListFragment{
             if(!paymentAdapter.isEmpty()) paymentAdapter.clear();
 
             Log.d("Debt", "Token is in place...");
-            debtService = ServiceProvider.getDebtService();
+            debtService = ServiceProvider.getCashService();
 
             Call<PaymentResponse> call = debtService.getHouseholdPayments(2, 30);
 
@@ -92,5 +86,9 @@ public class PaymentsListFragment extends ListFragment{
     public void onListItemClick(ListView l, View v, int position, long id) {
 
 
+    }
+
+    public String getClassName(){
+        return getString(R.string.payments_fragment_name);
     }
 }

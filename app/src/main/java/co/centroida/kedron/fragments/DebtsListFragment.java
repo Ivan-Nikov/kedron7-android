@@ -1,17 +1,12 @@
 package co.centroida.kedron.fragments;
 
 import android.app.AlertDialog;
-import android.support.design.widget.AppBarLayout;
-import android.support.design.widget.CoordinatorLayout;
 import android.support.v4.app.ListFragment;
 import android.content.DialogInterface;
 import android.support.design.widget.Snackbar;
-import android.support.v4.app.Fragment;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.ListView;
 
 import java.io.IOException;
@@ -21,7 +16,7 @@ import co.centroida.kedron.adapters.DebtsAdapter;
 import co.centroida.kedron.api.ServiceProvider;
 import co.centroida.kedron.api.models.Debt;
 import co.centroida.kedron.api.models.DebtResponse;
-import co.centroida.kedron.api.services.IDebtService;
+import co.centroida.kedron.api.services.ICashService;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -32,12 +27,11 @@ import retrofit2.Response;
 public class DebtsListFragment extends ListFragment{
 
     private DebtsAdapter debtsAdapter;
-    private IDebtService debtService;
+    private ICashService debtService;
 
     @Override
     public void onCreate(Bundle savedInstance){
         super.onCreate(savedInstance);
-
 
         Log.d("Debts", "Debt is creating...");
 
@@ -62,7 +56,7 @@ public class DebtsListFragment extends ListFragment{
             if(!debtsAdapter.isEmpty()) debtsAdapter.clear();
 
             Log.d("Debt", "Token is in place...");
-            debtService = ServiceProvider.getDebtService();
+            debtService = ServiceProvider.getCashService();
 
             Call<DebtResponse> call = debtService.getHouseholdDebts(2, 30);
 
@@ -71,18 +65,18 @@ public class DebtsListFragment extends ListFragment{
             call.enqueue(new Callback<DebtResponse>() {
                 @Override
                 public void onResponse(Call<DebtResponse> call, Response<DebtResponse> response) {
-//                    if(response.isSuccess()){
-//                        Log.d("Debts", "Response achieved");
+                    if(response.isSuccess()){
+                        Log.d("Debts", "Response achieved");
                     debtsAdapter.addAll(response.body().getDebts());
-//                    }else{
-//                        Log.e("Debts", "Failed to retrieve the debts for a given id");
-//                        try {
-//                            Log.e("Debts", response.errorBody().string());
-//                        } catch (IOException e) {
-//                            Log.e("dsd", e.getLocalizedMessage());
-//                        }
-//
-//                    }
+                    }else{
+                        Log.e("Debts", "Failed to retrieve the debts for a given id");
+                        try {
+                            Log.e("Debts", response.errorBody().string());
+                        } catch (IOException e) {
+                            Log.e("Debts", e.getLocalizedMessage());
+                        }
+
+                    }
                 }
 
                 @Override
@@ -95,7 +89,6 @@ public class DebtsListFragment extends ListFragment{
 
     @Override
     public void onListItemClick(ListView l, View v, int position, long id) {
-        //TODO: Pay for the selected item
         super.onListItemClick(l, v, position, id);
 
         final Debt item = debtsAdapter.getItem(position);
@@ -138,5 +131,9 @@ public class DebtsListFragment extends ListFragment{
         AlertDialog dialog = builder.create();
         dialog.show();
 
+    }
+
+    public String getClassName(){
+        return getString(R.string.debts_fragment_name);
     }
 }

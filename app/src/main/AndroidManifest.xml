@@ -28,8 +28,8 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".activities.PaymentsActivity"
-            android:label="@string/title_activity_debts"
+            android:name=".activities.CashBookActivity"
+            android:label="@string/debts_fragment_name"
             android:theme="@style/AppTheme.NoActionBar">
         </activity>
     </application>

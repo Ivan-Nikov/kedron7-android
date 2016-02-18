@@ -8,7 +8,7 @@
     >
 
     <TextView
-        android:id="@+id/payment_name"
+        android:id="@+id/deposit_date"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="5dp"
@@ -18,13 +18,14 @@
         />
 
     <TextView
-        android:id="@+id/payment_value"
+        android:id="@+id/deposit_value"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_gravity="end"
         android:layout_margin="5dp"
         android:layout_weight="1"
+        android:layout_gravity="end"
         android:padding="5dp"
         android:textColor="@color/black"
         />
+
 </LinearLayout>
