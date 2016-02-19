@@ -13,6 +13,7 @@ import android.widget.TextView;
 
 import com.google.gson.annotations.SerializedName;
 
+import java.text.DateFormat;
 import java.util.Date;
 import java.util.List;
 
@@ -26,6 +27,7 @@ public class DebtsAdapter extends ArrayAdapter<Debt>{
     private class DebtViewHolder{
         TextView value;
         TextView expenseName;
+        TextView dateMade;
     }
 
     public DebtsAdapter(Context context, int res){
@@ -41,14 +43,21 @@ public class DebtsAdapter extends ArrayAdapter<Debt>{
                     .inflate(R.layout.debt_viewholder, parent, false);
             holder.expenseName = (TextView) convertView.findViewById(R.id.debt_name);
             holder.value = (TextView) convertView.findViewById(R.id.debt_value);
+            holder.dateMade = (TextView) convertView.findViewById(R.id.debt_date);
 
             convertView.setTag(holder);;
         }else{
             holder = (DebtViewHolder) convertView.getTag();
         }
 
-        holder.expenseName.setText(getItem(position).getExpenseTypeName());
-        holder.value.setText(String.valueOf(getItem(position).getValue()));
+        Debt debt = getItem(position);
+
+        holder.expenseName.setText(debt.getExpenseTypeName());
+        holder.value.setText(String.valueOf(debt.getValue()));
+        holder.dateMade.setText(String.valueOf(
+                DateFormat
+                        .getDateInstance()
+                        .format(debt.getDateMade())));
 
         return convertView;
     }

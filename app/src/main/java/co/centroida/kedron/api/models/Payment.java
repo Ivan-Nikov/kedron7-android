@@ -2,30 +2,23 @@ package co.centroida.kedron.api.models;
 
 import com.google.gson.annotations.SerializedName;
 
+import java.util.Date;
+
 /**
  * Created by rimmustafin on 2/18/16.
  */
 
-//{
-//        "Id": 1,
-//        "Value": 2.0,
-//        "AmountPaid": 3.0,
-//        "DateMade": "2016-02-18T16:31:08.5532817+00:00",
-//        "DatePaid": "2016-02-18T16:31:08.5532817+00:00",
-//        "ExpenseTypeName": "sample string 5"
-//        }
-
 public class Payment {
     @SerializedName("Id")
-    public int Id;
+    private int Id;
     @SerializedName("Value")
-    public double Value;
+    private double Value;
     @SerializedName("DateMade")
-    public String DateMade;
+    private Date DateMade;
     @SerializedName("DatePaid")
-    public String DatePaid;
+    private Date DatePaid;
     @SerializedName("ExpenseTypeName")
-    public String ExpenseTypeName;
+    private String ExpenseTypeName;
 
     public Payment (Payment A) {
         this.Id=A.Id;
@@ -51,27 +44,27 @@ public class Payment {
         Value = value;
     }
 
-    public String getDateMade() {
-        return DateMade;
-    }
-
-    public void setDateMade(String dateMade) {
-        DateMade = dateMade;
-    }
-
-    public String getDatePaid() {
-        return DatePaid;
-    }
-
-    public void setDatePaid(String datePaid) {
-        DatePaid = datePaid;
-    }
-
     public String getExpenseTypeName() {
         return ExpenseTypeName;
     }
 
     public void setExpenseTypeName(String expenseTypeName) {
         ExpenseTypeName = expenseTypeName;
+    }
+
+    public Date getDateMade() {
+        return DateMade;
+    }
+
+    public void setDateMade(Date dateMade) {
+        DateMade = dateMade;
+    }
+
+    public Date getDatePaid() {
+        return DatePaid;
+    }
+
+    public void setDatePaid(Date datePaid) {
+        DatePaid = datePaid;
     }
 }

@@ -7,6 +7,7 @@ import android.view.View;
 import android.widget.ListView;
 
 import java.io.IOException;
+import java.util.Date;
 
 import co.centroida.kedron.R;
 import co.centroida.kedron.adapters.PaymentsAdapter;
@@ -20,7 +21,7 @@ import retrofit2.Response;
 /**
  * A placeholder fragment containing a simple view.
  */
-public class PaymentsListFragment extends ListFragment{
+public class PaymentsListFragment extends ListFragment implements ICashbookFragment{
 
     private PaymentsAdapter paymentAdapter;
     private ICashService debtService;
@@ -46,7 +47,11 @@ public class PaymentsListFragment extends ListFragment{
         super.onViewCreated(view, savedInstanceState);
     }
 
-    public void updateList(){
+
+    @Override
+    public void updateList() { updateList(null, null); }
+
+    public void updateList(Date lower, Date upper){
         if(ServiceProvider.hasToken()){
 
             if(!paymentAdapter.isEmpty()) paymentAdapter.clear();
@@ -54,7 +59,9 @@ public class PaymentsListFragment extends ListFragment{
             Log.d("Debt", "Token is in place...");
             debtService = ServiceProvider.getCashService();
 
-            Call<PaymentResponse> call = debtService.getHouseholdPayments(2, 30);
+            Call<PaymentResponse> call = debtService.getHouseholdPayments(2, 30,
+                    ServiceProvider.convertDate(lower),
+                    ServiceProvider.convertDate(upper));
 
             Log.d("Debt", "A call is formed");
 
@@ -80,6 +87,11 @@ public class PaymentsListFragment extends ListFragment{
                 }
             });
         }
+    }
+
+    @Override
+    public void search(String query) {
+
     }
 
     @Override

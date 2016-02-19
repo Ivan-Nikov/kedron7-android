@@ -12,7 +12,6 @@ import java.util.List;
 import co.centroida.kedron.R;
 import co.centroida.kedron.adapters.DepositsAdapter;
 import co.centroida.kedron.api.ServiceProvider;
-import co.centroida.kedron.api.models.DebtResponse;
 import co.centroida.kedron.api.models.Deposit;
 import co.centroida.kedron.api.services.ICashService;
 import retrofit2.Call;
@@ -22,7 +21,7 @@ import retrofit2.Response;
 /**
  * A placeholder fragment containing a simple view.
  */
-public class DepositListFragment extends ListFragment{
+public class DepositListFragment extends ListFragment implements ICashbookFragment{
 
     private DepositsAdapter depositsAdapter;
     private ICashService debtService;
@@ -49,6 +48,7 @@ public class DepositListFragment extends ListFragment{
         super.onViewCreated(view, savedInstanceState);
     }
 
+    @Override
     public void updateList(){
         if(ServiceProvider.hasToken()){
 
@@ -57,7 +57,7 @@ public class DepositListFragment extends ListFragment{
             Log.d("Deposit", "Token is in place...");
             debtService = ServiceProvider.getCashService();
 
-            Call<List<Deposit>> call = debtService.getHousegoldDeposits(1);
+            Call<List<Deposit>> call = debtService.getHouseholdDeposits(1);
 
             Log.d("Deposit", "A call is formed");
 
@@ -84,6 +84,11 @@ public class DepositListFragment extends ListFragment{
                 }
             });
         }
+    }
+
+    @Override
+    public void search(String query) {
+
     }
 
     @Override

@@ -24,7 +24,7 @@ import retrofit2.Response;
 /**
  * A placeholder fragment containing a simple view.
  */
-public class DebtsListFragment extends ListFragment{
+public class DebtsListFragment extends ListFragment implements ICashbookFragment{
 
     private DebtsAdapter debtsAdapter;
     private ICashService debtService;
@@ -50,6 +50,7 @@ public class DebtsListFragment extends ListFragment{
         super.onViewCreated(view, savedInstanceState);
     }
 
+    @Override
     public void updateList(){
         if(ServiceProvider.hasToken()){
 
@@ -85,6 +86,11 @@ public class DebtsListFragment extends ListFragment{
                 }
             });
         }
+    }
+
+    @Override
+    public void search(String query) {
+
     }
 
     @Override

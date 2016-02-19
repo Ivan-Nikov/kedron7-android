@@ -8,6 +8,7 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
 import java.io.IOException;
+import java.util.Date;
 
 import co.centroida.kedron.api.models.Token;
 import co.centroida.kedron.api.services.IBuildingService;
@@ -32,6 +33,7 @@ public class ServiceProvider {
 
     private static Retrofit retrofit;
     private static OkHttpClient client;
+    private static Gson gson;
 
     private static IKedronService kedronService;
     private static IBuildingService buildingService;
@@ -134,7 +136,7 @@ public class ServiceProvider {
                 @Override
                 public okhttp3.Response intercept(Chain chain) throws IOException {
                     Request original = chain.request();
-
+                    Log.d("INTER", original.toString());
                     // Request customization: add request headers
                     Request.Builder requestBuilder = original.newBuilder()
                             .header("Authorization", header_token)
@@ -147,7 +149,7 @@ public class ServiceProvider {
 
             client = httpClient.build();
 
-            Gson gson = new GsonBuilder()
+            gson = new GsonBuilder()
                     .setDateFormat("yyyy-MM-dd'T'HH:mm:ss")
                     .create();
 
@@ -164,5 +166,13 @@ public class ServiceProvider {
         }
     }
 
+    public static Gson getGson() {
+        return gson;
+    }
 
+    //Hey Gafka
+    public static String convertDate(Date date){
+        if(date == null) return null;
+        return gson.toJson(date).substring(1,20);
+    }
 }

@@ -1,5 +1,6 @@
 package co.centroida.kedron.api.services;
 
+import java.util.Date;
 import java.util.List;
 
 import co.centroida.kedron.api.models.Debt;
@@ -37,8 +38,10 @@ public interface ICashService {
     Call<DebtResponse> getHouseholdDebts(@Path("id") int id, @Query("top") int top);
 
     @GET("api/households/{id}/payments")
-    Call<PaymentResponse> getHouseholdPayments(@Path("id") int id, @Query("top") int top);
+    Call<PaymentResponse> getHouseholdPayments(@Path("id") int id, @Query("top") int top,
+                                               @Query("datePaidLowerBondary") String lower,
+                                               @Query("datePaidUpperBoundary") String upper);
 
     @GET("api/households/{id}/deposits")
-    Call<List<Deposit>> getHousegoldDeposits(@Path("id") int id);
+    Call<List<Deposit>> getHouseholdDeposits(@Path("id") int id);
 }

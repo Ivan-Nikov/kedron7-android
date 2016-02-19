@@ -7,11 +7,13 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
+import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.List;
 
 import co.centroida.kedron.R;
+import co.centroida.kedron.api.models.Debt;
 import co.centroida.kedron.api.models.Deposit;
 import co.centroida.kedron.api.models.Payment;
 
@@ -47,13 +49,10 @@ public class DepositsAdapter extends ArrayAdapter<Deposit> {
         }
 
         //TODO: Make an easier transform
+        Deposit deposit = getItem(position);
 
-
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy MMM dd");
-
-
-        holder.date.setText(sdf.format(getItem(position).getDateCreated()));
-        holder.value.setText(String.valueOf(getItem(position).getValue()));
+        holder.date.setText(DateFormat.getDateInstance().format(deposit.getDateCreated()));
+        holder.value.setText(String.valueOf(deposit.getValue()));
 
         return convertView;
     }
