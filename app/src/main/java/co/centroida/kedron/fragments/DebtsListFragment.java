@@ -11,7 +11,6 @@ import android.widget.ListView;
 
 import java.io.IOException;
 
-import co.centroida.kedron.R;
 import co.centroida.kedron.adapters.DebtsAdapter;
 import co.centroida.kedron.api.ServiceProvider;
 import co.centroida.kedron.api.models.Debt;
@@ -24,7 +23,7 @@ import retrofit2.Response;
 /**
  * A placeholder fragment containing a simple view.
  */
-public class DebtsListFragment extends ListFragment implements ICashbookFragment{
+public class DebtsListFragment extends ListFragment implements IHouseholdBookFragment {
 
     private DebtsAdapter debtsAdapter;
     private ICashService debtService;
@@ -59,7 +58,7 @@ public class DebtsListFragment extends ListFragment implements ICashbookFragment
             Log.d("Debt", "Token is in place...");
             debtService = ServiceProvider.getCashService();
 
-            Call<DebtResponse> call = debtService.getHouseholdDebts(2, 30);
+            Call<DebtResponse> call = debtService.getHouseholdDebts(1, 30);
 
             Log.d("Debt", "A call is formed");
 
@@ -137,9 +136,5 @@ public class DebtsListFragment extends ListFragment implements ICashbookFragment
         AlertDialog dialog = builder.create();
         dialog.show();
 
-    }
-
-    public String getClassName(){
-        return getString(R.string.debts_fragment_name);
     }
 }

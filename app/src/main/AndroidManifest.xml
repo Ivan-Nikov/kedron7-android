@@ -28,7 +28,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".activities.CashBookActivity"
+            android:name=".activities.HouseholdBookActivity"
             android:label="@string/debts_fragment_name"
             android:theme="@style/AppTheme.NoActionBar">
         </activity>

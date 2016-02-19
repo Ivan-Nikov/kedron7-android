@@ -21,7 +21,7 @@ import retrofit2.Response;
 /**
  * A placeholder fragment containing a simple view.
  */
-public class DepositListFragment extends ListFragment implements ICashbookFragment{
+public class DepositListFragment extends ListFragment implements IHouseholdBookFragment {
 
     private DepositsAdapter depositsAdapter;
     private ICashService debtService;

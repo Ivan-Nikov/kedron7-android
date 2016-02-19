@@ -49,7 +49,7 @@ public class LoginActivity extends AppCompatActivity {
         //Check whether the token is present
         ServiceProvider.init();
         if(ServiceProvider.checkSavedToken(this)){
-            Intent toMain = new Intent(this, CashBookActivity.class);
+            Intent toMain = new Intent(this, HouseholdBookActivity.class);
             startActivity(toMain);
             finish();
         }

@@ -12,28 +12,26 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 
-import com.borax12.materialdaterangepicker.date.DatePickerController;
 import com.borax12.materialdaterangepicker.date.DatePickerDialog;
 
 
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Date;
 import java.util.List;
 
 import co.centroida.kedron.R;
 import co.centroida.kedron.fragments.DebtsListFragment;
 import co.centroida.kedron.fragments.DepositListFragment;
-import co.centroida.kedron.fragments.ICashbookFragment;
+import co.centroida.kedron.fragments.IHouseholdBookFragment;
 import co.centroida.kedron.fragments.PaymentsListFragment;
 
-public class CashBookActivity extends AppCompatActivity
+public class HouseholdBookActivity extends AppCompatActivity
         implements DatePickerDialog.OnDateSetListener{
 
     ViewPager mViewPager;
     PaymentFragmentAdapter fragmentAdapter;
 
-    List<ICashbookFragment> cashbookFragments;
+    List<IHouseholdBookFragment> cashbookFragments;
     DebtsListFragment debtsListFragment;
     PaymentsListFragment paymentsListFragment;
     DepositListFragment depositListFragment;
@@ -81,7 +79,7 @@ public class CashBookActivity extends AppCompatActivity
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_cashbook);
+        setContentView(R.layout.activity_householdbook);
         Toolbar toolbar = (Toolbar) findViewById(R.id.cashbook_toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayShowTitleEnabled(false);
@@ -106,7 +104,7 @@ public class CashBookActivity extends AppCompatActivity
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_cashbook, menu);
+        getMenuInflater().inflate(R.menu.menu_householdbook, menu);
         return true;
     }
 
@@ -129,7 +127,7 @@ public class CashBookActivity extends AppCompatActivity
             case R.id.cashbook_date:
                 Calendar now = Calendar.getInstance();
                 DatePickerDialog dpd = DatePickerDialog.newInstance(
-                        CashBookActivity.this,
+                        HouseholdBookActivity.this,
                         now.get(Calendar.YEAR),
                         now.get(Calendar.MONTH),
                         now.get(Calendar.DAY_OF_MONTH)

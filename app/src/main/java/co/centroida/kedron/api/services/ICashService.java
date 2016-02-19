@@ -39,6 +39,7 @@ public interface ICashService {
 
     @GET("api/households/{id}/payments")
     Call<PaymentResponse> getHouseholdPayments(@Path("id") int id, @Query("top") int top,
+                                               @Query("skip") int skip,
                                                @Query("datePaidLowerBondary") String lower,
                                                @Query("datePaidUpperBoundary") String upper);
 
