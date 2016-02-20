@@ -1,14 +1,17 @@
 package co.centroida.kedron.fragments;
 
 import android.app.ListFragment;
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.ListView;
 
 import co.centroida.kedron.R;
+import co.centroida.kedron.activities.UpdateHouseholdActivity;
 import co.centroida.kedron.adapters.HouseholdsAdapter;
 import co.centroida.kedron.api.ServiceProvider;
 import co.centroida.kedron.api.models.Household;
@@ -41,7 +44,7 @@ public class HouseholdListFragment extends ListFragment{
             call.enqueue(new Callback<HouseholdResponse>() {
                 @Override
                 public void onResponse(Call<HouseholdResponse> call, Response<HouseholdResponse> response) {
-                    Log.e("Households", String.valueOf(response.code()));
+
                     adapt.addAll(response.body().getHouseholds());
                     adapt.notifyDataSetChanged();
                 }
@@ -56,5 +59,12 @@ public class HouseholdListFragment extends ListFragment{
         }
     }
 
+    @Override
+    public void onListItemClick(ListView l, View v, int position, long id) {
+        super.onListItemClick(l, v, position, id);
+        Intent update = new Intent(getActivity(), UpdateHouseholdActivity.class);
 
+
+
+    }
 }

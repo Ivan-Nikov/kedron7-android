@@ -14,4 +14,5 @@
     <string name="title_activity_front">FrontActivity</string>
     <string name="action_settings">Settings</string>
     <string name="title_activity_household">HouseholdActivity</string>
+    <string name="title_activity_update_household">UpdateHouseholdActivity</string>
 </resources>

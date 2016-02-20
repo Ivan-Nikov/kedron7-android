@@ -16,7 +16,7 @@
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".activities.MainActivity"></activity>
+        <activity android:name=".activities.MainActivity" />
         <activity
             android:name=".activities.LoginActivity"
             android:label="@string/title_activity_login">
@@ -34,6 +34,15 @@
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="co.centroida.kedron.activities.MainActivity" />
+        </activity>
+        <activity
+            android:name=".activities.UpdateHouseholdActivity"
+            android:label="@string/title_activity_update_household"
+            android:parentActivityName=".activities.HouseholdActivity"
+            android:theme="@style/AppTheme.NoActionBar">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="co.centroida.kedron.activities.HouseholdActivity" />
         </activity>
     </application>
 
