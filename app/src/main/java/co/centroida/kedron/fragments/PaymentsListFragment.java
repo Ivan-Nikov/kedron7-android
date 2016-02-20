@@ -7,31 +7,42 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AbsListView;
 import android.widget.ListView;
 
 import java.io.IOException;
 import java.util.Date;
 
-import co.centroida.kedron.R;
 import co.centroida.kedron.adapters.PaymentsAdapter;
 import co.centroida.kedron.api.ServiceProvider;
 import co.centroida.kedron.api.models.PaymentResponse;
 import co.centroida.kedron.api.services.ICashService;
+import co.centroida.kedron.helpers.EndlessScrollListener;
+import co.centroida.kedron.helpers.OnRequestEndlessListDataListener;
+import co.centroida.kedron.helpers.SwipeRefreshListFragment;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-/**
- * A placeholder fragment containing a simple view.
- */
-public class PaymentsListFragment extends ListFragment implements IHouseholdBookFragment {
+
+public class PaymentsListFragment extends SwipeRefreshListFragment implements RefreshListFragment {
     private PaymentsAdapter paymentAdapter;
     private ICashService debtService;
-    EndlessScrollListener scrollListener = new EndlessScrollListener();
 
-    private Date lower_date = null;
-    private Date upper_date = null;
+    //Callback for the endless scroll
+    EndlessScrollListener scrollListener = new EndlessScrollListener(5, 5,
+            new OnRequestEndlessListDataListener() {
+        @Override
+        public void onLoadMore(int top, int skip) {
+            loadPage(top, skip);
+        }
+    });
+
+    private Date lower_date_paid = null;
+    private Date upper_date_paid = null;
+    private Date lower_date_made = null;
+    private Date upper_date_made = null;
+
+    private String searchString;
 
     private final static int max_skip = 5;
 
@@ -51,6 +62,12 @@ public class PaymentsListFragment extends ListFragment implements IHouseholdBook
     public void onActivityCreated (Bundle savedInstanceState){
         super.onActivityCreated(savedInstanceState);
         getListView().setOnScrollListener(scrollListener);
+        this.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                updateList();
+            }
+        });
 
     }
 
@@ -61,15 +78,12 @@ public class PaymentsListFragment extends ListFragment implements IHouseholdBook
 
     private void loadPage(int count, int skip_top){
         if (ServiceProvider.hasToken()) {
-
-            Log.d("Debt", "Token is in place...");
             debtService = ServiceProvider.getCashService();
 
             Call<PaymentResponse> call = debtService.getHouseholdPayments(1, count, skip_top,
-                    ServiceProvider.convertDate(lower_date),
-                    ServiceProvider.convertDate(upper_date));
+                    ServiceProvider.convertDate(lower_date_paid),
+                    ServiceProvider.convertDate(upper_date_paid));
 
-            Log.d("Debt", "A call is formed");
 
             call.enqueue(new Callback<PaymentResponse>() {
                 @Override
@@ -93,9 +107,10 @@ public class PaymentsListFragment extends ListFragment implements IHouseholdBook
                     Log.e("Payment", "Failed to receive a response", t);
                 }
             });
+        }else{
+            //TODO: exit
         }
     }
-
 
     @Override
     public void updateList() {
@@ -103,11 +118,12 @@ public class PaymentsListFragment extends ListFragment implements IHouseholdBook
     }
 
     public void updateList(Date lower, Date upper) {
-        lower_date = lower;
-        upper_date = upper;
+        lower_date_paid = lower;
+        upper_date_paid = upper;
         paymentAdapter.clear();
         loadPage(max_skip, 0);
         scrollListener.reset();
+        setRefreshing(false);
     }
 
     @Override
@@ -118,42 +134,9 @@ public class PaymentsListFragment extends ListFragment implements IHouseholdBook
     @Override
     public void onListItemClick(ListView l, View v, int position, long id) {
 
-
     }
 
-    public class EndlessScrollListener implements AbsListView.OnScrollListener {
-        private int currentPage = 0;
-        private int previousTotal = 0;
-        private boolean loading = true;
 
-        public void reset(){
-            currentPage = 0;
-            previousTotal = 0;
-        }
 
-        public EndlessScrollListener() {
-        }
-
-        @Override
-        public void onScroll(AbsListView view, int firstVisibleItem,
-                             int visibleItemCount, int totalItemCount) {
-            if (loading) {
-                if (totalItemCount > previousTotal) {
-                    loading = false;
-                    previousTotal = totalItemCount;
-                }
-            }
-            if (!loading && (totalItemCount - visibleItemCount) <= (firstVisibleItem + 2)) {
-                loading = true;
-                currentPage++;
-                loadPage(max_skip, currentPage*max_skip);
-            }
-        }
-
-        @Override
-        public void onScrollStateChanged(AbsListView view, int scrollState) {
-
-        }
-    }
 
 }

@@ -8,17 +8,4 @@
         android:title="Select dates"
         android:icon="@drawable/ic_date"
         app:showAsAction="always"/>
-    <item
-        android:id="@+id/cashbook_search"
-        android:orderInCategory="200"
-        android:title="Search"
-        android:icon="@drawable/ic_search"
-        app:showAsAction="always"
-    />
-    <item
-        android:id="@+id/cashbook_refresh"
-        android:orderInCategory="300"
-        android:title="Refresh"
-        android:icon="@drawable/ic_refresh"
-        app:showAsAction="always"/>
 </menu>

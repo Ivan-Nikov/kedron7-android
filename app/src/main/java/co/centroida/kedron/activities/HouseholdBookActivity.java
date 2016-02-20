@@ -7,7 +7,6 @@ import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 
@@ -22,7 +21,7 @@ import java.util.List;
 import co.centroida.kedron.R;
 import co.centroida.kedron.fragments.DebtsListFragment;
 import co.centroida.kedron.fragments.DepositListFragment;
-import co.centroida.kedron.fragments.IHouseholdBookFragment;
+import co.centroida.kedron.fragments.RefreshListFragment;
 import co.centroida.kedron.fragments.PaymentsListFragment;
 
 public class HouseholdBookActivity extends AppCompatActivity
@@ -31,11 +30,14 @@ public class HouseholdBookActivity extends AppCompatActivity
     ViewPager mViewPager;
     PaymentFragmentAdapter fragmentAdapter;
 
-    List<IHouseholdBookFragment> cashbookFragments;
+    List<RefreshListFragment> cashbookFragments;
     DebtsListFragment debtsListFragment;
     PaymentsListFragment paymentsListFragment;
     DepositListFragment depositListFragment;
 
+    public enum HouseholdScreen{
+        Payments, Debts, Deposits
+    }
 
     public class PaymentFragmentAdapter extends FragmentPagerAdapter {
         List<Fragment> fragmentList;
@@ -58,21 +60,21 @@ public class HouseholdBookActivity extends AppCompatActivity
         @Override
         public CharSequence getPageTitle(int position) {
             String choice = null;
-            switch (position) {
-                case 0:
+            switch (HouseholdScreen.values()[position]) {
+                case Debts:
                     choice = getString(R.string.debts_fragment_name);
                     break;
-                case 1:
+                case Payments:
                     choice = getString(R.string.payments_fragment_name);
                     break;
-                case 2:
+                case Deposits:
                     choice = getString(R.string.deposits_fragment_name);
                     break;
                 default:
-                    choice = "NONE";
+                    choice = "HMM";
                     break;
             }
-            return (CharSequence) choice;
+            return choice;
         }
     }
 
@@ -84,15 +86,16 @@ public class HouseholdBookActivity extends AppCompatActivity
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayShowTitleEnabled(false);
 
+
         //TODO: Meh
 
-        debtsListFragment = new DebtsListFragment();
         paymentsListFragment = new PaymentsListFragment();
+        debtsListFragment = new DebtsListFragment();
         depositListFragment = new DepositListFragment();
 
         List<Fragment> fragments = new ArrayList<>();
-        fragments.add(debtsListFragment);
         fragments.add(paymentsListFragment);
+        fragments.add(debtsListFragment);
         fragments.add(depositListFragment);
 
         fragmentAdapter = new PaymentFragmentAdapter(fragments, getSupportFragmentManager());
@@ -110,20 +113,10 @@ public class HouseholdBookActivity extends AppCompatActivity
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
 
         switch (id) {
-            case R.id.cashbook_refresh:
-                if (true)
-                {
-                    debtsListFragment.updateList();
-                    paymentsListFragment.updateList();
-                    depositListFragment.updateList();
-                }
-                break;
+
             case R.id.cashbook_date:
                 Calendar now = Calendar.getInstance();
                 DatePickerDialog dpd = DatePickerDialog.newInstance(
@@ -148,8 +141,6 @@ public class HouseholdBookActivity extends AppCompatActivity
         Calendar upper = Calendar.getInstance();
         upper.set(yearEnd, monthOfYearEnd, dayOfMonthEnd);
         paymentsListFragment.updateList(lower.getTime(), upper.getTime());
-        Log.d("CashBook", lower.getTime().toString());
-        Log.d("CashBook", upper.getTime().toString());
     }
 
 }

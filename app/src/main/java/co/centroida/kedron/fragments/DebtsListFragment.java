@@ -23,7 +23,7 @@ import retrofit2.Response;
 /**
  * A placeholder fragment containing a simple view.
  */
-public class DebtsListFragment extends ListFragment implements IHouseholdBookFragment {
+public class DebtsListFragment extends ListFragment implements RefreshListFragment {
 
     private DebtsAdapter debtsAdapter;
     private ICashService debtService;
@@ -53,7 +53,7 @@ public class DebtsListFragment extends ListFragment implements IHouseholdBookFra
     public void updateList(){
         if(ServiceProvider.hasToken()){
 
-            if(!debtsAdapter.isEmpty()) debtsAdapter.clear();
+           debtsAdapter.clear();
 
             Log.d("Debt", "Token is in place...");
             debtService = ServiceProvider.getCashService();
